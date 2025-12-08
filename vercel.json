@@ -1,0 +1,48 @@
+{
+    "version": 2,
+    "functions": {
+        "api/index.php": { 
+            "runtime": "vercel-php@0.7.4",
+            "maxDuration": 60
+        }
+    },
+    "routes": [
+        { "src": "/assets/(.*)", "dest": "/public/assets/$1" },
+        { "src": "/build/(.*)", "dest": "/public/build/$1" },
+        { "src": "/favicon.ico", "dest": "/public/favicon.ico" },
+        { "src": "/robots.txt", "dest": "/public/robots.txt" },
+        { "src": "/(.*)", "dest": "/api/index.php" }
+    ],
+    "env": {
+        "APP_NAME": "Wedding Invitation",
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://your-vercel-app.vercel.app",
+        "APP_KEY": "base64:PCi+BtaaSZBuDdGqcKlDr6v0lttL1XXrfyfUgaiYD+0=",
+        "APP_TIMEZONE": "Asia/Jakarta",
+        "APP_LOCALE": "id",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+        "VIEW_COMPILED_PATH": "/tmp/views",
+        "CACHE_DRIVER": "array",
+        "QUEUE_CONNECTION": "sync",
+        "LOG_CHANNEL": "stderr",
+        "LOG_LEVEL": "error",
+        "SESSION_DRIVER": "cookie",
+        "SESSION_LIFETIME": "10080",
+        "SESSION_ENCRYPT": "false",
+        "SESSION_PATH": "/",
+        "SESSION_DOMAIN": "null",
+        "SESSION_SECURE_COOKIE": "true",
+        "SESSION_HTTP_ONLY": "true",
+        "SESSION_SAME_SITE": "lax",
+        "DB_CONNECTION": "mysql",
+        "DB_HOST": "otp8op.h.filess.io",
+        "DB_PORT": "61001",
+        "DB_DATABASE": "wedding_invitation_db_duringarea",
+        "DB_USERNAME": "wedding_invitation_db_duringarea",
+        "DB_PASSWORD": "0f4ead55e55fdf4505042026c5fb037651e371d3"
+    }
+}
