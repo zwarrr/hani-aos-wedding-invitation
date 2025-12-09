@@ -823,73 +823,33 @@
 
     // Add to Calendar Function
     window.addToCalendar = function() {
-      // Data acara
-      const eventData = {
-        title: "Wedding Celebration - Hani & Aos",
-        description: "Resepsi Pernikahan Hani Nurpatimah & Aos Pratama\\n\\nKami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.\\n\\nDress Code: Batik/Formal",
-        location: "Jl. Raya Kampung No. 123, Jakarta",
-        startDate: "20260118T080000", // 18 Januari 2026, 08:00 WIB
-        endDate: "20260118T150000",   // 18 Januari 2026, 15:00 WIB
-        timezone: "Asia/Jakarta"
-      };
-      
-      // Generate .ics file content
-      const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Wedding Invitation//Hani & Aos//EN
-CALSCALE:GREGORIAN
-METHOD:PUBLISH
-BEGIN:VEVENT
-DTSTART;TZID=${eventData.timezone}:${eventData.startDate}
-DTEND;TZID=${eventData.timezone}:${eventData.endDate}
-DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
-UID:wedding-hani-aos-${Date.now()}@invitation.com
-SUMMARY:${eventData.title}
-DESCRIPTION:${eventData.description}
-LOCATION:${eventData.location}
-STATUS:CONFIRMED
-SEQUENCE:0
-BEGIN:VALARM
-TRIGGER:-P1D
-ACTION:DISPLAY
-DESCRIPTION:Reminder: ${eventData.title} besok!
-END:VALARM
-END:VEVENT
-END:VCALENDAR`;
-
-      // Create blob and download
-      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = 'Wedding-Hani-Aos.ics';
-      
-      // Trigger download
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Redirect ke route Laravel yang generate .ics
+      window.location.href = '{{ route("save.date") }}';
       
       // Show toast notification
-      const toast = document.createElement('div');
-      toast.className = 'fixed top-4 right-4 z-50 max-w-sm';
-      toast.style.animation = 'slideInRight 0.3s ease-out';
-      toast.innerHTML = `
-        <div class="bg-white shadow-2xl rounded-2xl p-4 border-2 border-green-200">
-          <div class="flex items-center gap-3">
-            <div class="bg-green-100 rounded-full p-2">
-              <i class="fas fa-calendar-check text-green-600 text-xl"></i>
-            </div>
-            <div>
-              <h3 class="font-semibold text-stone-800">Berhasil!</h3>
-              <p class="text-sm text-stone-600">File calendar telah diunduh</p>
+      setTimeout(() => {
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-4 right-4 z-50 max-w-sm';
+        toast.style.animation = 'slideInRight 0.3s ease-out';
+        toast.innerHTML = `
+          <div class="bg-white shadow-2xl rounded-2xl p-4 border-2 border-green-200">
+            <div class="flex items-center gap-3">
+              <div class="bg-green-100 rounded-full p-2">
+                <i class="fas fa-calendar-check text-green-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-stone-800">Berhasil!</h3>
+                <p class="text-sm text-stone-600">Kalender sedang dibuka...</p>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-      document.body.appendChild(toast);
-      setTimeout(() => {
-        toast.style.animation = 'slideOutRight 0.3s ease-in';
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          toast.style.animation = 'slideOutRight 0.3s ease-in';
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }, 100);
     }
   </script>
 
