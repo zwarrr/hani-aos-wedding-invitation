@@ -304,8 +304,8 @@
     // ===========================================
     // UCAPAN API CONFIGURATION & FUNCTIONS
     // ===========================================
-    // API URL - Menggunakan Laravel route
-    window.API_URL = '{{ route('api.ucapan.index') }}'.replace('?', '');
+    // API URL - Menggunakan URL relatif untuk menghindari mixed content
+    window.API_URL = '/api/ucapan';
     
     window.currentPage = 1;
     window.itemsPerPage = 100;
@@ -366,7 +366,7 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Mengirim...';
 
-        const response = await fetch('{{ route("api.ucapan.store") }}', {
+        const response = await fetch('/api/ucapan', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -824,7 +824,7 @@
     // Add to Calendar Function
     window.addToCalendar = function() {
       // Redirect ke route Laravel yang generate .ics
-      window.location.href = '{{ route("save.date") }}';
+      window.location.href = '/save-the-date';
       
       // Show toast notification
       setTimeout(() => {
