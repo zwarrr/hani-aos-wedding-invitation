@@ -32,10 +32,6 @@
             "dest": "/public/$1"
         },
         {
-            "src": "/api/(.*)",
-            "dest": "/api/index.php?/$1"
-        },
-        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
