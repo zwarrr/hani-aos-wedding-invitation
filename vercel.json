@@ -4,10 +4,6 @@
         {
             "src": "api/index.php",
             "use": "vercel-php@0.7.4"
-        },
-        {
-            "src": "public/**",
-            "use": "@vercel/static"
         }
     ],
     "routes": [
@@ -28,6 +24,10 @@
             "dest": "/public/robots.txt"
         },
         {
+            "src": "/(.*\\.(css|js|json|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+            "dest": "/public/$1"
+        },
+        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
@@ -36,8 +36,7 @@
         "APP_NAME": "Wedding Invitation",
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://your-vercel-app.vercel.app",
-        "APP_KEY": "base64:PCi+BtaaSZBuDdGqcKlDr6v0lttL1XXrfyfUgaiYD+0=",
+        "APP_URL": "https://hani-aos-wedding-invitation.vercel.app",
         "APP_TIMEZONE": "Asia/Jakarta",
         "APP_LOCALE": "id",
         "APP_CONFIG_CACHE": "/tmp/config.php",
