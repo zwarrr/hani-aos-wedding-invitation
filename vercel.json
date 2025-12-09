@@ -28,8 +28,12 @@
             "dest": "/public/robots.txt"
         },
         {
-            "src": "/(.*\\.(css|js|json|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+            "src": "/(.*\\.(css|js|json|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|mp3|wav|ogg))",
             "dest": "/public/$1"
+        },
+        {
+            "src": "/api/(.*)",
+            "dest": "/api/index.php?/$1"
         },
         {
             "src": "/(.*)",
