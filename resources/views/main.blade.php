@@ -308,7 +308,8 @@
     window.API_URL = '/api/ucapan';
     
     window.currentPage = 1;
-    window.itemsPerPage = 100;
+    window.itemsPerPage = 5;
+    window.totalPages = 1;
     window.autoRefreshInterval = null;
     window.serverTime = null; // Simpan waktu server
 
@@ -487,12 +488,13 @@
               console.log('HTML rendered successfully');
             }
             
-            // Update pagination - hanya tampilkan jika data lebih dari 3
+            // Update pagination
             if (pagination && data.pagination) {
               window.currentPage = data.pagination.page;
+              window.totalPages = data.pagination.totalPages;
               
-              // Hanya tampilkan pagination jika total data lebih dari 3
-              if (data.pagination.total > 3) {
+              // Tampilkan pagination jika ada lebih dari 1 halaman
+              if (data.pagination.totalPages > 1) {
                 const pageInfo = document.getElementById('page-info');
                 const prevBtn = document.getElementById('prev-btn');
                 const nextBtn = document.getElementById('next-btn');
@@ -503,7 +505,7 @@
                 
                 pagination.classList.remove('hidden');
               } else {
-                // Sembunyikan pagination jika data 3 atau kurang
+                // Sembunyikan pagination jika hanya 1 halaman
                 pagination.classList.add('hidden');
               }
             }
@@ -525,6 +527,32 @@
         }
       }
     }
+
+    // Bind pagination controls (Prev/Next) sekali saja
+    (function bindUcapanPaginationButtons() {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      if (prevBtn && !prevBtn.dataset.bound) {
+        prevBtn.dataset.bound = 'true';
+        prevBtn.addEventListener('click', () => {
+          if ((window.currentPage || 1) > 1) {
+            window.loadUcapanFromDB((window.currentPage || 1) - 1);
+          }
+        });
+      }
+
+      if (nextBtn && !nextBtn.dataset.bound) {
+        nextBtn.dataset.bound = 'true';
+        nextBtn.addEventListener('click', () => {
+          const current = window.currentPage || 1;
+          const total = window.totalPages || 1;
+          if (current < total) {
+            window.loadUcapanFromDB(current + 1);
+          }
+        });
+      }
+    })();
 
     // ===========================================
     // PAGE LOADING FUNCTIONS

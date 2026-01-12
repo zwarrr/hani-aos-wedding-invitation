@@ -13,15 +13,23 @@ class UcapanController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->input('page', 1);
-        $limit = $request->input('limit', 100); // Ubah dari 10 ke 100 untuk menampilkan lebih banyak
+        $page = max(1, (int) $request->input('page', 1));
+        // Default tampilkan 5 item per halaman, batasi max untuk mencegah abuse
+        $limit = (int) $request->input('limit', 5);
+        $limit = min(max($limit, 1), 50);
         $offset = ($page - 1) * $limit;
 
         try {
             // JANGAN set timezone - data sudah dalam WIB
             
             // Get total count
-            $totalCount = DB::table('ucapan')->count();
+            $totalCount = (int) DB::table('ucapan')->count();
+
+            $totalPages = (int) max(1, ceil($totalCount / $limit));
+            if ($page > $totalPages) {
+                $page = $totalPages;
+                $offset = ($page - 1) * $limit;
+            }
 
             // Get ucapan data - LANGSUNG ambil data apa adanya
             $ucapan = DB::table('ucapan')
@@ -65,6 +73,7 @@ class UcapanController extends Controller
                         'pesan' => $item->pesan,
                         'kehadiran' => $item->kehadiran,
                         'waktu' => $waktu,
+                        'waktu_relatif' => $waktu,
                         'created_at' => $item->created_at
                     ];
                 });
@@ -77,7 +86,7 @@ class UcapanController extends Controller
                     'total' => $totalCount,
                     'page' => $page,
                     'limit' => $limit,
-                    'totalPages' => ceil($totalCount / $limit)
+                    'totalPages' => $totalPages
                 ]
             ]);
         } catch (\Exception $e) {
