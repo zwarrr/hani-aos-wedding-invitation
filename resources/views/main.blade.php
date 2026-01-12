@@ -163,7 +163,7 @@
 
   <!-- Background Music -->
   <audio id="bgMusic" loop>
-    <source src="{{ asset('assets/sound/Anugerah Terindah - Andmesh (Saxophone Cover by Dori Wirawan).mp3') }}" type="audio/mpeg">
+    <source src="/assets/sound/Anugerah%20Terindah%20-%20Andmesh%20(Saxophone%20Cover%20by%20Dori%20Wirawan).mp3" type="audio/mpeg">
   </audio>
 
   <!-- Music Control Button -->
@@ -526,7 +526,7 @@
           container.classList.remove('hidden');
         }
       }
-    }
+    };
 
     // Bind pagination controls (Prev/Next) sekali saja
     (function bindUcapanPaginationButtons() {
